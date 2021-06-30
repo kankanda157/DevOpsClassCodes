@@ -1,6 +1,6 @@
 pipeline{
     tools{
-        jdk 'ibspls_java'
+        jdk 'ibsplus_java'
         maven 'ibsplus_maven'
     }
     agent none

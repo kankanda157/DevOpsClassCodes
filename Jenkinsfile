@@ -1,8 +1,7 @@
-
 pipeline{
     tools{
-        jdk 'myjava'
-        maven 'mymaven'
+        jdk 'ibspls_java'
+        maven 'ibsplus_maven'
     }
     agent none
       stages{
@@ -10,25 +9,25 @@ pipeline{
                agent any
                steps{
 		 echo 'cloning..'
-                 git 'https://github.com/Sonal0409/DevOpsClassCodes.git'
+                 git 'https://github.com/kankanda157/DevOpsClassCodes.git'
               }
           }
           stage('Compile'){
-              agent any
+              agent {label 'linux_slave2'}
               steps{
                   echo 'compiling..'
                   sh 'mvn compile'
 	      }
           }
           stage('CodeReview'){
-              agent any
+              agent {label 'linux_slave2'}
               steps{
 		  echo 'codeReview'
                   sh 'mvn pmd:pmd'
               }
           }
            stage('UnitTest'){
-		   agent any
+		   agent {label 'linux_slave2'}
               steps{
 	    
                   sh 'mvn test'
@@ -40,7 +39,7 @@ pipeline{
            }	
           }
            stage('MetricCheck'){
-               agent any
+               agent {label 'linux_slave2'}
               steps{
                   sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
               }
@@ -51,7 +50,7 @@ pipeline{
            }		
           }
           stage('Package'){
-              agent any
+              agent {label 'linux_slave2'}
               steps{
                   sh 'mvn package'
               }
